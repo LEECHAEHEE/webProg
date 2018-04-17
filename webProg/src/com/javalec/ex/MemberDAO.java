@@ -40,12 +40,12 @@ public class MemberDAO {
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, dto.getId());
-			pstmt.setString(2, dto.getPw());
-			pstmt.setString(3, dto.getName());
+			pstmt.setString(1, dto.getName());
+			pstmt.setString(2, dto.getId());
+			pstmt.setString(3, dto.getPw());
 			pstmt.setString(4, dto.getEmail());
-			pstmt.setTimestamp(5, dto.getrDate());
-			pstmt.setString(6, dto.getAddress());
+			pstmt.setString(5, dto.getAddress());
+			pstmt.setTimestamp(6, dto.getrDate());
 			pstmt.executeUpdate();
 			ri = MemberDAO.MEMBER_JOIN_SUCCESS;
 		}catch(Exception e) {
