@@ -17,7 +17,7 @@
 <style>
 	
 	table{
-		width:50%;
+		width:300;
 		border-collapse:collapse;
 	}
 	
@@ -30,7 +30,6 @@
 	<form action="write.do" method="post">
 		<table>
 			<tr>
-				<th>글번호</th>
 				<th>이름 <input type="text" name="bName"></th>
 				<th>제목 <input type="text" name="bTitle"></th>
 			</tr>

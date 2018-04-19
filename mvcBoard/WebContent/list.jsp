@@ -19,8 +19,10 @@
 		font-size:1rem;
 		padding:8px;	
 		text-align:center;
+		border-bottom: 1px solid black;
 	}
 	table{
+		font-family: 'Nanum Gothic', sans-serif;
 		width:50%;
 		border-top:1px solid powderblue;
 		border-collapse: collapse;

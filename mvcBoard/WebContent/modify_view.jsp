@@ -1,17 +1,15 @@
-
-
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+</head>
 <style>
 	
 	table{
-		
 		font-family: 'Nanum Gothic', sans-serif;
 		font-size=1rem;
 		width:50%;
@@ -45,29 +43,27 @@
 		text-align: justify;
 	}
 </style>
-</head>
 <body>
 	<table>
 		<tr class="bottomLine">
-			<td class="leftAlign">±Û¹øÈ£</td>
+			<td class="leftAlign">ê¸€ë²ˆí˜¸</td>
 			<td>${content.bId }</td>
-			<td class="leftAlign">Á¦¸ñ</td>
+			<td class="leftAlign">ì œëª© <input type="text" value=${content.bTitle } name="bTitle"></td>
 			<td colspan="3">${content.bTitle }</td>
 		</tr>
 		<tr class="smallText bottomLine">
-			<td >ÀÛ¼ºÀÚ</td>
-			<td>${content.bName }</td>
-			<td>ÀÛ¼ºÀÏ</td>
+			<td>ì‘ì„±ì  <input type="text" value=${content.bName } name="bName"></td>
+			<td>ì‘ì„±ì¼ </td>
 			<td>${content.bDate }</td>
-			<td>Á¶È¸¼ö</td>
+			<td>ì¡°íšŒìˆ˜</td>
 			<td>${content.bHit }</td>
 		</tr>
 		<tr>
-			<td colspan="6" class="content">${content.bContent }<td>
+			<td colspan="6" class="content"><textarea name="bContent" rows="3" cols="50">${content.bContent }</textarea><td>
 		</tr>
 		<tr class="menu">
 			<td colspan="6">
-				<a href="reply_view.do?bId=${content.bId }">´ñ±Û</a>&nbsp;&nbsp;&nbsp;<a href="modify.do?bId=${content.bId }">¼öÁ¤</a>&nbsp;&nbsp;&nbsp;<a href="delete.do">»èÁ¦</a>&nbsp;&nbsp;&nbsp;<a href="list.do">µÚ·Î</a>
+				<a href="modifyClick.do">ìˆ˜ì •</a>
 			</td>	
 		</tr>
 	</table>
