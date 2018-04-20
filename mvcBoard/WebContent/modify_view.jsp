@@ -44,28 +44,32 @@
 	}
 </style>
 <body>
+<form action="modifyClick.do" method="post">
+	<input type="hidden" name="bId" value="${modify_content.bId }">
 	<table>
 		<tr class="bottomLine">
 			<td class="leftAlign">글번호</td>
-			<td>${content.bId }</td>
-			<td class="leftAlign">제목 <input type="text" value=${content.bTitle } name="bTitle"></td>
+			<td>${modify_content.bId }</td>
+			<td class="leftAlign">제목 <input type="text" value="${modify_content.bTitle }" name="bTitle"></td>
 			<td colspan="3">${content.bTitle }</td>
 		</tr>
 		<tr class="smallText bottomLine">
-			<td>작성자  <input type="text" value=${content.bName } name="bName"></td>
+			<td>작성자 </td>
+			<td><input type="text" value="${modify_content.bName }" name="bName"></td>
 			<td>작성일 </td>
-			<td>${content.bDate }</td>
+			<td>${modify_content.bDate }</td>
 			<td>조회수</td>
-			<td>${content.bHit }</td>
+			<td>${modify_content.bHit }</td>
 		</tr>
 		<tr>
-			<td colspan="6" class="content"><textarea name="bContent" rows="3" cols="50">${content.bContent }</textarea><td>
+			<td colspan="6" class="content"><textarea name="bContent" rows="10" cols="100">${modify_content.bContent }</textarea><td>
 		</tr>
 		<tr class="menu">
 			<td colspan="6">
-				<a href="modifyClick.do">수정</a>
+				<input type="submit" value="수정">&nbsp;&nbsp;<a href="content_view.do?bId=${modify_content.bId }">취소</a>
 			</td>	
 		</tr>
 	</table>
+</form>
 </body>
 </html>

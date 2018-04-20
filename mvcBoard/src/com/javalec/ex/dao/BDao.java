@@ -103,7 +103,8 @@ public class BDao {
 	}//public void write(String bName, String bTitle, String bContent)
 	
 	/*게시판 보여주기*/
-	public BDto showContent(int bId) {
+	public BDto showContent(String bId) {
+		upHit(String.valueOf(bId));
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -113,7 +114,7 @@ public class BDao {
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, bId);
+			pstmt.setString(1, bId);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
@@ -184,8 +185,7 @@ public class BDao {
 		}
 	}
 	/*본문 내용 갖고오기*/
-	public BDto reply_view(String bId) {
-		upHit(bId);
+	public BDto getContent(String bId) {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -227,6 +227,69 @@ public class BDao {
 		}
 		return dto;
 	}
+	
+	/*글 수정*/
+	public void modify(String bId, String bName, String bTitle, String bContent) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		String query = "update mvc_board set bName=?, bTitle=?, bContent=? where bId=?";
+		System.out.println(query);
+		System.out.println("1" + bId + " 2" + bName+ " 3"+bTitle+ " 4" + bContent);
+		try {
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, bName);
+			pstmt.setString(2, bTitle);
+			pstmt.setString(3, bContent);
+			pstmt.setString(4, bId);
+			int ri =pstmt.executeUpdate();
+			if(ri==1) {
+				System.out.println("update completed");
+			}else {
+				System.out.println("update failed");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(conn!=null) conn.close();
+				if(pstmt!=null) pstmt.close();
+			}catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	/*글 삭제*/
+	public void delete(String bId) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		String query = "delete from mvc_board where bId=?";
+		try {
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, Integer.parseInt(bId));
+			int ri =pstmt.executeUpdate();
+			
+			if(ri==1) {
+				System.out.println("delete completed");
+			}else {
+				System.out.println("delete failed");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(conn!=null) conn.close();
+				if(pstmt!=null) pstmt.close();
+			}catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
 	
 	private void replyShape( String strGroup, String strStep) {
 		// TODO Auto-generated method stub
@@ -280,4 +343,6 @@ public class BDao {
 			}
 		}
 	}
+
+
 }

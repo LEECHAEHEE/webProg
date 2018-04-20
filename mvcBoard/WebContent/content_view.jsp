@@ -67,7 +67,7 @@
 		</tr>
 		<tr class="menu">
 			<td colspan="6">
-				<a href="reply_view.do?bId=${content.bId }">댓글</a>&nbsp;&nbsp;&nbsp;<a href="modify.do?bId=${content.bId }">수정</a>&nbsp;&nbsp;&nbsp;<a href="delete.do">삭제</a>&nbsp;&nbsp;&nbsp;<a href="list.do">뒤로</a>
+				<a href="reply_view.do?bId=${content.bId }">댓글</a>&nbsp;&nbsp;&nbsp;<a href="modify.do?bId=${content.bId }">수정</a>&nbsp;&nbsp;&nbsp;<a href="delete.do?bId=${content.bId }">삭제</a>&nbsp;&nbsp;&nbsp;<a href="list.do">뒤로</a>
 			</td>	
 		</tr>
 	</table>

@@ -20,6 +20,7 @@ public class BReplyCommand implements BCommand{
 		
 		BDao dao = new BDao();
 		dao.reply(bId, bName, bTitle, bContent, bGroup, bStep, bIndent);
+		
 	}
 
 }

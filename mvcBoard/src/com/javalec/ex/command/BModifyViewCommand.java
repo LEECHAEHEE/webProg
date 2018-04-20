@@ -6,17 +6,17 @@ import javax.servlet.http.HttpServletResponse;
 import com.javalec.ex.dao.BDao;
 import com.javalec.ex.dto.BDto;
 
-public class BModify implements BCommand{
+
+public class BModifyViewCommand implements BCommand{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		String bId = request.getParameter("bId");
-		String bName= request.getParameter("bName");
-		String bTitle= request.getParameter("bTitle");
-		String bContent = request.getParameter("bContent");
+		
 		BDao dao = new BDao();
-		dao.modify(bId,bName,bTitle,bContent);
+		BDto dto = dao.getContent(bId);
+		request.setAttribute("modify_content", dto);
 	}
 
 }

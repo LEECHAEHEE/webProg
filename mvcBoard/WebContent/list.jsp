@@ -19,7 +19,7 @@
 		font-size:1rem;
 		padding:8px;	
 		text-align:center;
-		border-bottom: 1px solid black;
+		border-bottom: 1px solid lightgray;
 	}
 	table{
 		font-family: 'Nanum Gothic', sans-serif;
@@ -52,8 +52,10 @@
 				<tr>
 					<td>${dto.bId}</td>
 					<td>${dto.bName}</td>
-					<c:forEach begin="1" end="${dto.bIndent}">¤¤</c:forEach>
-					<td><a href="content_view.do?bId=${dto.bId}">${dto.bTitle}</a></td>
+					<td style="text-align:left">
+						<c:forEach begin="1" end="${dto.bIndent}">¤¤</c:forEach>
+						<a href="content_view.do?bId=${dto.bId}">${dto.bTitle}</a>
+					</td>
 					<td>${dto.bDate}</td>
 					<td>${dto.bHit}</td>
 				</tr>

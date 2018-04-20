@@ -13,7 +13,7 @@ public class BReplyViewCommand implements BCommand{
 		// TODO Auto-generated method stub
 		String bId = request.getParameter("bId");
 		BDao dao = new BDao();
-		BDto dto = dao.reply_view(bId);
+		BDto dto = dao.getContent(bId);
 		request.setAttribute("reply_content", dto);
 	}
 

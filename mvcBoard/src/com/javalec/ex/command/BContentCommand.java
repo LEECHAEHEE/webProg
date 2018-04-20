@@ -11,9 +11,7 @@ public class BContentCommand implements BCommand{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		int bId= Integer.parseInt(request.getParameter("bId"));
-		
-		
+		String bId= request.getParameter("bId");
 		BDao dao = new BDao();
 		BDto dto = dao.showContent(bId);
 		

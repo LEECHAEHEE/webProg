@@ -11,8 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.javalec.ex.command.BCommand;
 import com.javalec.ex.command.BContentCommand;
+import com.javalec.ex.command.BDeleteCommand;
 import com.javalec.ex.command.BListCommand;
-import com.javalec.ex.command.BListModifyCommand;
+import com.javalec.ex.command.BModifyClickCommand;
+import com.javalec.ex.command.BModifyViewCommand;
+import com.javalec.ex.command.BReplyCommand;
 import com.javalec.ex.command.BReplyViewCommand;
 import com.javalec.ex.command.BWriteCommand;
 
@@ -73,10 +76,22 @@ public class BFrontController extends HttpServlet {
 			command = new BReplyViewCommand();
 			command.execute(request, response);
 			viewPage ="reply_view.jsp";
+		}else if(com.equals("/reply.do")) {
+			command = new BReplyCommand();
+			command.execute(request, response);
+			viewPage="list.do";
 		}else if(com.equals("/modify.do")) {
-			command = new BListModifyCommand();
+			command = new BModifyViewCommand();
 			command.execute(request, response);
 			viewPage ="modify_view.jsp";
+		}else if(com.equals("/delete.do")) {
+			command= new BDeleteCommand();
+			command.execute(request, response);
+			viewPage="list.do";
+		}else if(com.equals("/modifyClick.do")) {
+			command = new BModifyClickCommand();
+			command.execute(request, response);
+			viewPage="list.do";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
