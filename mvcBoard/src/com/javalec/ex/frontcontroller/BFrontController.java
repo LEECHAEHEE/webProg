@@ -92,6 +92,8 @@ public class BFrontController extends HttpServlet {
 			command = new BModifyClickCommand();
 			command.execute(request, response);
 			viewPage="list.do";
+		}else if(com.equals("/deleteConfirm.do")) {
+			viewPage="deleteConfirm.jsp";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

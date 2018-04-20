@@ -25,7 +25,7 @@
 	.smallText :nth-child(2n-1){
 		background-color: powderblue;
 		text-align:center;
-		font-size: 0.5rem;
+		font-size: 0.7rem;
 	}
 	
 	.menu{
