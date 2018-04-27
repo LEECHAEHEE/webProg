@@ -1,0 +1,52 @@
+id
+name
+contemt
+createDate
+
+1. createDate 순으로 받아오자
+2. totalCount//총게시글
+3. countPage//한페이지에 보일 개수
+4. page//현재페이지
+5. startCount//(page-1)*countPage+1 
+6. endCount//page*CountPage
+
+
+<div class="tableWrap">
+		<table class="tableContent">
+			<tr>
+				<th>글번호</th>
+				<th>작성자</th>
+				<th>제목</th>
+				<th>작성일</th>
+				<th>조회수</th>
+			</tr>
+			<c:forEach items="${list}" var="dto">
+				<tr>
+					<td>${dto.bId}</td>
+					<td>${dto.bName}</td>
+					<td style="text-align:left">
+						<c:forEach begin="1" end="${dto.bIndent}">ㄴ</c:forEach>
+						<a href="content_view.do?bId=${dto.bId}">${dto.bTitle}</a>
+					</td>
+					<td>${dto.bDate}</td>
+					<td>${dto.bHit}</td>
+				</tr>
+			</c:forEach>
+			
+			<tr class="paging">
+				<td colspan="5">
+					<a href="list.do?page=1">처음</a>
+					<a href="list.do">이전 페이지</a>
+					<c:forEach var="page" begin="1" end="10">
+						<a href="list.do?page=${page }">${page }&nbsp;</a>
+					</c:forEach>
+					<a href="list.do">다음 페이지</a>
+					<a href="list.do?page=${fn:length(list) }">마지막</a>
+				</td>
+			</tr>	
+	</table>
+	
+	<div style="width:100%; margin-top:10px">
+		<input id="writeButton" type="button" value="글쓰기" onclick="javascript:window.location='write_view.do'">
+	</div>
+</div>

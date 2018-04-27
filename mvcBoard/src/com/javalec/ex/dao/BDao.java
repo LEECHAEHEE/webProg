@@ -11,6 +11,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import com.javalec.ex.dto.BDto;
+import com.javalec.ex.dto.PageDto;
 
 
 public class BDao {
@@ -27,48 +28,85 @@ public class BDao {
 			e.printStackTrace();
 		}
 	}
-	/*게시판 목록 보기*/
-	public ArrayList<BDto> showList() {
-		ArrayList<BDto> dtos = new ArrayList<>();
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String query = "select * from mvc_board order by bGroup desc, bStep asc";
-
+	
+/*총 게시글 갯수*/
+public int CountList() {
+	int countlist = 0;
+	Connection conn = null;
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	
+	String query = "select count(*) as numlist from mvc_board";
+	
+	try {
+		conn = dataSource.getConnection();
+		pstmt = conn.prepareStatement(query);
+		rs = pstmt.executeQuery();
+		if(rs.next())
+			countlist = rs.getInt("numlist");
+		
+	}catch(Exception e) {
+		e.printStackTrace();
+	}finally {
 		try {
-			conn = dataSource.getConnection();
-			pstmt = conn.prepareStatement(query);
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				int bID = rs.getInt("bId");
-				String bName = rs.getString("bName");
-				String bTitle = rs.getString("bTitle");
-				String bContent = rs.getString("bContent");
-				Timestamp bDate = rs.getTimestamp("bDate");
-				int bGroup = rs.getInt("bGroup");
-				int bHit = rs.getInt("bHit");
-				int bStep = rs.getInt("bStep");
-				int bIndent = rs.getInt("bIndent");
-				
-				BDto dto = new BDto(bID, bName, bTitle, bContent, bDate, bHit, bGroup, bStep, bIndent);
-				dtos.add(dto);
-			}
-			
-			return dtos;
-		}catch(Exception e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				if(conn!=null) conn.close();
-				if(pstmt!=null) pstmt.close();
-				if(rs!=null) rs.close();
-			}catch(Exception e2) {
-				e2.printStackTrace();
-			}
+			if(conn!=null) conn.close();
+			if(pstmt!=null) pstmt.close();
+			if(rs!=null) rs.close();
+		}catch(Exception e2) {
+			e2.printStackTrace();
 		}
-		return dtos;
 	}
+	return countlist;
+}
+
+/*게시판 목록 보기*/
+public ArrayList<BDto> showList(PageDto pdto) {
+	ArrayList<BDto> dtos = new ArrayList<>();
+	Connection conn = null;
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	String query = "select a.rnum, a.bid, a.bname, a.btitle, a.bcontent, a.bdate, a.bgroup, a.bhit, a.bstep, a.bindent\r\n" + 
+			"from ( select rownum as rnum, b.bid, b.bname, b.btitle, b.bcontent, b.bdate, b.bgroup, b.bhit, b.bstep, b.bindent\r\n" + 
+			"from ( select bid, bname, btitle, bcontent, bdate, bgroup, bhit, bstep, bindent\r\n" + 
+			"        from mvc_board\r\n" + 
+			"        order by bgroup desc, bstep asc ) b\r\n" + 
+			"where rownum <= ? ) a\r\n" + 
+			"where a.rnum >= ?";
+	
+	try {
+		conn = dataSource.getConnection();
+		pstmt = conn.prepareStatement(query);
+		pstmt.setString(1, String.valueOf(pdto.getCurrPage()*10));
+		pstmt.setString(2, String.valueOf(pdto.getCurrPage()*10-9));
+		rs = pstmt.executeQuery();
+		while(rs.next()) {
+			int bID = rs.getInt("bId");
+			String bName = rs.getString("bName");
+			String bTitle = rs.getString("bTitle");
+			String bContent = rs.getString("bContent");
+			Timestamp bDate = rs.getTimestamp("bDate");
+			int bGroup = rs.getInt("bGroup");
+			int bHit = rs.getInt("bHit");
+			int bStep = rs.getInt("bStep");
+			int bIndent = rs.getInt("bIndent");
+			
+			dtos.add(new BDto(bID,bName,bTitle,bContent,bDate,bGroup,bHit,bStep,bIndent ));
+		}
+	}catch(Exception e) {
+		e.printStackTrace();
+	}finally {
+		try {
+			if(conn!=null) conn.close();
+			if(pstmt != null) pstmt.close();
+			if(rs!=null)rs.close();
+		}catch(Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+	return dtos;
+}
+
+
 	/*게시판 작성*/
 	public void write(String bName, String bTitle, String bContent) {
 		Connection conn = null;
@@ -303,7 +341,7 @@ public class BDao {
 			preparedStatement.setInt(1, Integer.parseInt(strGroup));
 			preparedStatement.setInt(2, Integer.parseInt(strStep));
 			
-			int rn = preparedStatement.executeUpdate();
+			preparedStatement.executeUpdate();
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -328,7 +366,7 @@ public class BDao {
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, bId);
 			
-			int rn = preparedStatement.executeUpdate();
+			preparedStatement.executeUpdate();
 					
 		} catch (Exception e) {
 			// TODO: handle exception
