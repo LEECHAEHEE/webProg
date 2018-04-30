@@ -1,8 +1,8 @@
-package com.first.ex.command;
+package com.middle.ex.MCommand;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public interface Bcommand {
+public interface MCommand {
 	void execute(HttpServletRequest request, HttpServletResponse response);
-}
+}	

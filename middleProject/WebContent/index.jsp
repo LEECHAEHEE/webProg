@@ -8,7 +8,7 @@
 </head>
 <body>
 	<script>
-		location.href="login.mdo";
+		location.href="login/login.jsp";
 	</script>
 </body>
 </html>
