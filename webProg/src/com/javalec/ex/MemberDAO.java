@@ -76,6 +76,7 @@ public class MemberDAO {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
+				
 				ri = MemberDAO.MEMBER_EXISTENT;
 			}else {
 				ri = MemberDAO.MEMBER_NONEXISTENT;
@@ -100,7 +101,7 @@ public class MemberDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String query = "select pw from members where id=?";
+		String query = "select * from members where id=?";
 		try {
 			conn = getConnection();
 			pstmt=conn.prepareStatement(query);
@@ -109,6 +110,11 @@ public class MemberDAO {
 			
 			if(rs.next()) {
 				String dbPw = rs.getString("pw");
+				
+				System.out.println(rs.getString("name"));
+				System.out.println(rs.getString("id"));
+				System.out.println(rs.getString("pw"));
+				
 				if(dbPw.equals(pw)) {
 					ri = MemberDAO.MEMBER_LOGIN_SUCCESS; //로그인 성공
 				}else {
@@ -192,7 +198,7 @@ public class MemberDAO {
 		}
 		return ri;
 	}
-	
+
 	private Connection getConnection() {
 		Context context = null;
 		DataSource dataSource = null;
@@ -206,5 +212,4 @@ public class MemberDAO {
 		}
 		return connection;
 	}
-	
 }

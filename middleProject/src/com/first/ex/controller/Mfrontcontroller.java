@@ -49,11 +49,13 @@ public class Mfrontcontroller extends HttpServlet {
 		
 		String viewPage = null;
 		
-		/*로그인 확인 과정*/
-		if(pattern.equals("/login_check.mdo")) {
+	
+		if(pattern.equals("/login.mdo")) {
+			viewPage = "login.jsp";
+		}else if(pattern.equals("/login_check.mdo")) {
 			command = new MloginCheck();
 			command.execute(request, response);
-			viewPage = "login_check";
+			viewPage = "login_check.jsp";
 		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
