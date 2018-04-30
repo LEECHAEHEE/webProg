@@ -58,6 +58,7 @@ public class BFrontController extends HttpServlet {
 		String uri = request.getRequestURI();
 		String conPath = request.getContextPath();
 		String com = uri.substring(conPath.length());
+		
 		if(com.equals("/write_view.do")){
 			viewPage="write_view.jsp";
 		}else if(com.equals("/write.do")) {
