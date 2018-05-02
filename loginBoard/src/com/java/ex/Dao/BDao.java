@@ -11,6 +11,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import com.java.ex.Dto.BDto;
+import com.sun.org.apache.xml.internal.dtm.DTMDOMException;
 
 
 public class BDao {
@@ -30,7 +31,10 @@ public class BDao {
 	public static BDao getInstance() {
 		return holder.instance;
 	}
-	
+
+	/********************************************************************************************************************
+	 * WRITE
+	********************************************************************************************************************/
 	public int write(String id, String name, String title, String content) {
 		int writeResult = DB_ERROR;
 		String sql = "insert into board (num,name,title,content,hit) values(board_seq.nextval, ?,?,?,?)";
@@ -55,10 +59,12 @@ public class BDao {
 		return writeResult;
 	}
 	
-	
+	/********************************************************************************************************************
+	 * BListCommand
+	********************************************************************************************************************/
 	public ArrayList<BDto> BListCommand(){
 		ArrayList<BDto> dtos = new ArrayList<>();
-		String sql = "select * from board";
+		String sql = "select * from board order by num desc";
 		
 		try {
 			conn = getConnection();
@@ -68,9 +74,8 @@ public class BDao {
 				int num = rs.getInt("num");
 				String name = rs.getString("name");
 				String title = rs.getString("title");
-				String rDate = new SimpleDateFormat("MM/dd/HH/mm/ss").format(rs.getTimestamp("rdate"));
-				String hit = String.valueOf(rs.getInt("hit"));
-					
+				String rDate = new SimpleDateFormat("MM/dd HH:mm:ss").format(rs.getTimestamp("rdate"));
+				int hit = rs.getInt("hit");
 				BDto dto = new BDto(num, name, title, rDate, hit);
 				dtos.add(dto);
 			}
@@ -81,6 +86,35 @@ public class BDao {
 		}
 		return dtos;
 	}
+	/********************************************************************************************************************
+	 * CONTENT
+	********************************************************************************************************************/
+	public BDto content(String num) {
+		BDto bDto = null;
+		String sql = "select * from board where num=?";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, num);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				String name = rs.getString("name");
+				String title = rs.getString("title");
+				String content = rs.getString("content");
+				String rDate = new SimpleDateFormat("MM/dd hh:mm:ss").format(rs.getTimestamp("rDate"));
+				int hit= rs.getInt("hit");
+				bDto = new BDto(Integer.parseInt(num), name, title, content, rDate, hit);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			streamCloser();
+		}
+		return bDto;
+	}
+	/********************************************************************************************************************
+	 * SREAMCLOSER
+	********************************************************************************************************************/
 	public void streamCloser() {
 		try {
 			if(pstmt!=null) pstmt.close();
@@ -89,6 +123,9 @@ public class BDao {
 			e.printStackTrace();
 		}
 	}
+	/********************************************************************************************************************
+	 * GET CONNECTION
+	********************************************************************************************************************/
 	public Connection getConnection() {
 		Context context = null;
 		DataSource dataSource = null;

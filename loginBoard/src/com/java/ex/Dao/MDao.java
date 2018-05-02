@@ -35,7 +35,9 @@ public class MDao {
 	public static MDao getInstance() {
 		return holder.instance;
 	}
-	
+	/********************************************************************************************************************
+	 * LOGINCHECK
+	********************************************************************************************************************/
 	public ArrayList<Object> loginCheck(String id, String pw) {
 		ArrayList<Object> result = new ArrayList<>();
 		
@@ -68,7 +70,9 @@ public class MDao {
 		return result;
 	}
 	
-	
+	/********************************************************************************************************************
+	 * JOIN
+	********************************************************************************************************************/
 	public int join(MDto dto) {
 		int joinResult = DB_ERROR;
 		String sql = "insert into members(name,id,pw,email,address) values(?,?,?,?,?)";
@@ -94,7 +98,9 @@ public class MDao {
 		}
 		return joinResult;
 	}
-	
+	/********************************************************************************************************************
+	 * IDCHECK
+	********************************************************************************************************************/
 	public int idCheck(String id) {
 		int idResult = DB_ERROR;
 		String sql = "select * from members where id=?";
@@ -117,6 +123,67 @@ public class MDao {
 		}
 		return idResult;
 	}
+	/********************************************************************************************************************
+	 * MODIFY
+	********************************************************************************************************************/
+	public int modify(String id, String name, String pw, String email, String address) {
+		int modifyResult = DB_ERROR;
+		String sql = "update members set name=?, pw=?, email=?, address=? where id=?";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setString(2, pw);
+			pstmt.setString(3, email);
+			pstmt.setString(4, address);
+			pstmt.setString(5, id);
+			modifyResult = pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			streamCloser();
+		}
+		return modifyResult;
+	}
+	/********************************************************************************************************************
+	 * GET JOIN DATE
+	********************************************************************************************************************/
+	public String getJoinDate(String id) {
+		String sql = "select rDate from members where id=?";
+		String joinDate = null;
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				joinDate = rs.getString("rDate");
+			}
+		}catch(Exception e) {
+			e.getMessage();
+		}finally {
+			streamCloser();
+		}
+		return joinDate;
+	}
+	/********************************************************************************************************************
+	 * LEAVE
+	 ********************************************************************************************************************/
+	public int leave(String id) {
+		int leaveResult = DB_ERROR;
+		String sql = "delete from members where id=?";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			leaveResult = pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.getMessage();
+		}finally {
+			streamCloser();
+		}
+		return leaveResult;
+	}
 	
 	public Connection getConnection() {
 		Connection conn = null;
@@ -133,9 +200,7 @@ public class MDao {
 	
 		return conn;
 	}
-	public int idCheck() {
-		return -1;
-	}
+	
 	public void streamCloser() {
 		try {
 		if(pstmt!=null) pstmt.close();

@@ -12,8 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import com.java.ex.MCommand.MCommand;
 import com.java.ex.MCommand.MIdCheck;
 import com.java.ex.MCommand.MJoinCommand;
+import com.java.ex.MCommand.MLeave;
 import com.java.ex.MCommand.MLoginCheckCommand;
 import com.java.ex.MCommand.MLogoutCommand;
+import com.java.ex.MCommand.MModify;
 
 /**
  * Servlet implementation class MFrontController
@@ -45,7 +47,6 @@ public class MFrontController extends HttpServlet {
 		String uri = request.getRequestURI();
 		String ctxtPath = request.getContextPath();
 		String com = uri.substring(ctxtPath.length());
-		
 		if(com.equals("/loginCheck.mdo")) {
 			command = new MLoginCheckCommand();
 			command.execute(request, response);
@@ -62,6 +63,14 @@ public class MFrontController extends HttpServlet {
 			command = new MIdCheck();
 			command.execute(request, response);
 			viewPage="idCheckPopUp.jsp";
+		}else if(com.equals("/modify.mdo")) {
+			command = new MModify();
+			command.execute(request, response);
+			viewPage="modifyResult.jsp";
+		}else if(com.equals("/leave.mdo")) {
+			command = new MLeave();
+			command.execute(request, response);
+			viewPage="leaveResult.jsp";
 		}
 	
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

@@ -12,7 +12,8 @@
 
 <style>
 	tr:hover {background-color: #f5f5f5;}
-	a{text-decoration:none;}
+	a{text-decoration:none; color:#ddd}
+	a:hover{color:black}
 	table { width:50%; margin: 0 auto; text-align:left;}
 	
 	th{
@@ -30,7 +31,7 @@
 </style>
 </head>
 <body>
-User : ${sessionName }<br/><hr>
+User : ${nameSession }<br/><hr>
 <%-- 	<select name="contentNum" onchange="list.do?contentNum=${contentNum }"> --%>
 <!-- 		<option value="10">10</option> -->
 <!-- 		<option value="20">20</option> -->
@@ -42,7 +43,7 @@ User : ${sessionName }<br/><hr>
 				<th style="width:50px;">글번호</th>
 				<th style="width:80px;">작성자</th>
 				<th style="width:200px;">제목</th>
-				<th style="width:100px;">작성일</th>
+				<th style="width:150px;">작성일</th>
 				<th style="width:50px;">조회수</th>
 			</tr>
 		</thead>
@@ -51,9 +52,9 @@ User : ${sessionName }<br/><hr>
 				<tr>
 					<td>${iter.num }</td>
 					<td>${iter.name }</td>
-					<td>${iter.title }</td>
-					<td>${iter.content }</td>
+					<td><a href="content.bdo?num=${iter.num }">${iter.title }</a></td>
 					<td>${iter.rDate }</td>
+					<td>${iter.hit }</td>
 				</tr>
 			</c:forEach>
 		</tbody>

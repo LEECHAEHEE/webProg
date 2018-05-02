@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.java.ex.BCommand.BCommand;
+import com.java.ex.BCommand.BContentCommand;
 import com.java.ex.BCommand.BListCommand;
 import com.java.ex.BCommand.BWriteCommand;
-import com.java.ex.MCommand.MCommand;
 
 @WebServlet("*.bdo")
 public class BFrontController extends HttpServlet {
@@ -47,6 +47,10 @@ public class BFrontController extends HttpServlet {
 			command = new BWriteCommand();
 			command.execute(request, response);
 			viewPage="writeResult.jsp";
+		}else if(com.equals("/content.bdo")) {
+			command = new BContentCommand();
+			command.execute(request, response);
+			viewPage="content.jsp";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
