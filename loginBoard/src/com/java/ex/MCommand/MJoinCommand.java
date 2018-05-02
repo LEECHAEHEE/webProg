@@ -25,6 +25,7 @@ public class MJoinCommand implements MCommand{
 		if(joinResult == 1) { 
 			HttpSession session = request.getSession();
 			session.setAttribute("idSession", id);
+			session.setAttribute("nameSession", name);
 		}
 	}	
 }

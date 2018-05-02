@@ -1,5 +1,7 @@
 package com.java.ex.MCommand;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -14,12 +16,14 @@ public class MLoginCheckCommand implements MCommand{
 		String pw = request.getParameter("pw");
 		
 		MDao dao = MDao.getInstance();
-		int loginResult = dao.loginCheck(id, pw);
-		if(loginResult==1) {
+		ArrayList<Object> result = dao.loginCheck(id, pw);
+		if((int)result.get(0)==1) {
 			HttpSession session = request.getSession();
 			session.setAttribute("idSession", id);
+			session.setAttribute("nameSession", (String)result.get(1));
 		}
-		request.setAttribute("result", loginResult);
+		
+		request.setAttribute("result", result.get(0));
 	}
 	
 }

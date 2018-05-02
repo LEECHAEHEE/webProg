@@ -7,8 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+	HI! ${ nameSession}<br/><hr>
 	<input type="button" value="게시판" onclick="javascript:window.location='list.bdo'">
 	<input type="button" value="로그아웃" onclick="javascript:window.location='logout.mdo'">
-	<input type="button" value="뒤로" onclick="javascript:window.location='login.jsp'">
 </body>
 </html>

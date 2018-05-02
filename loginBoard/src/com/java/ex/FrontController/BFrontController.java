@@ -1,4 +1,4 @@
-package com.java.ex.MFrontController;
+package com.java.ex.FrontController;
 
 import java.io.IOException;
 
@@ -9,25 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.java.ex.BCommand.BCommand;
+import com.java.ex.BCommand.BListCommand;
+import com.java.ex.BCommand.BWriteCommand;
 import com.java.ex.MCommand.MCommand;
-import com.java.ex.MCommand.MIdCheck;
-import com.java.ex.MCommand.MJoinCommand;
-import com.java.ex.MCommand.MLoginCheckCommand;
-import com.java.ex.MCommand.MLogoutCommand;
 
-/**
- * Servlet implementation class MFrontController
- */
-@WebServlet({ "/MFrontController", "*.mdo" })
-public class MFrontController extends HttpServlet {
+@WebServlet("*.bdo")
+public class BFrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public MFrontController() {
+    public BFrontController() {
         super();
-        // TODO Auto-generated constructor stub
     }
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doAction(request,response);
 	}
 
@@ -38,33 +32,25 @@ public class MFrontController extends HttpServlet {
 	protected void doAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
 		
-		MCommand command = null;
-		
 		String viewPage = null;
+		BCommand command = null;
 		
 		String uri = request.getRequestURI();
 		String ctxtPath = request.getContextPath();
 		String com = uri.substring(ctxtPath.length());
 		
-		if(com.equals("/loginCheck.mdo")) {
-			command = new MLoginCheckCommand();
+		if(com.equals("/list.bdo")) {
+			command = new BListCommand();
 			command.execute(request, response);
-			viewPage="loginResult.jsp";
-		}else if(com.equals("/logout.mdo")) {
-			command = new MLogoutCommand();
+			viewPage="list.jsp";
+		}else if(com.equals("/write.bdo")) {
+			command = new BWriteCommand();
 			command.execute(request, response);
-			viewPage="login.jsp";
-		}else if(com.equals("/join.mdo")) {
-			command = new MJoinCommand();
-			command.execute(request, response);
-			viewPage="joinResult.jsp";
-		}else if(com.equals("/idCheck.mdo")) {
-			command = new MIdCheck();
-			command.execute(request, response);
-			viewPage="join.jsp";
+			viewPage="writeResult.jsp";
 		}
-	
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
 	}
+
 }

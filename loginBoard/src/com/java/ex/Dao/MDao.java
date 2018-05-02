@@ -3,6 +3,7 @@ package com.java.ex.Dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -14,10 +15,13 @@ public class MDao {
 	private final int DB_ERROR = -1;
 	private final int LOGIN_SUCCESS = 1;
 	private final int LOGIN_FAILED_ID = 2;
-	private final int LOGIN_FALIED_PW = 3;
+	private final int LOGIN_FAILED_PW = 3;
 
 	private final int JOIN_SUCCESS = 1;
 	private final int JOIN_FAILED = 2;
+	
+	private final int ID_EXISTED=0;
+	private final int ID_NON_EXISTED=1;
 	private MDao () {}
 	
 	private Connection conn = null;
@@ -32,9 +36,10 @@ public class MDao {
 		return holder.instance;
 	}
 	
-	public int loginCheck(String id, String pw) {
-		int loginResult = DB_ERROR;
-		String sql = "select pw from members where id=?";
+	public ArrayList<Object> loginCheck(String id, String pw) {
+		ArrayList<Object> result = new ArrayList<>();
+		
+		String sql = "select name, pw from members where id=?";
 
 		try {
 			conn = getConnection();
@@ -44,20 +49,23 @@ public class MDao {
 			
 			if(rs.next()) {
 				String DBpw = rs.getString("pw");
+				String name = rs.getString("name");
+				
 				if(DBpw.equals(pw)) {
-					loginResult = LOGIN_SUCCESS;
+					result.add(LOGIN_SUCCESS);
+					result.add(name);
 				}else {
-					loginResult = LOGIN_FALIED_PW;
+					result.add(LOGIN_FAILED_PW);
 				}
 			}else {
-				loginResult = LOGIN_FAILED_ID;
+				result.add(LOGIN_FAILED_ID);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
 			streamCloser();
 		}
-		return loginResult;
+		return result;
 	}
 	
 	
@@ -85,6 +93,29 @@ public class MDao {
 			streamCloser();
 		}
 		return joinResult;
+	}
+	
+	public int idCheck(String id) {
+		int idResult = DB_ERROR;
+		String sql = "select * from members where id=?";
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				idResult =  ID_EXISTED;
+			}else {
+				idResult= ID_NON_EXISTED;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			streamCloser();
+		}
+		return idResult;
 	}
 	
 	public Connection getConnection() {
