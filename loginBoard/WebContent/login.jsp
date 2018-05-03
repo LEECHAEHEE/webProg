@@ -11,8 +11,8 @@
 <style>
 	html,body,h1,h2,h3,h4,h5,h6,p,ul,ol,dl,p,dd, input{margin: 0; padding: 0;}
 	ul {list-style: none}
-	.loginWrap { width:300px; height:300px; margin:0 auto; border:1px dotted powderblue; font-family:"NanumGothic"}
-	.loginHeader { width:250px; height:50px; text-align: center; margin:0 auto; border-bottom: 1px dotted powderblue}
+	.loginWrap { width:300px; height:300px; margin:0 auto; margin-top:30px; border:1px dotted green; border-radius:10px; font-family:"NanumGothic"}
+	.loginHeader { width:250px; height:50px; text-align: center; margin:0 auto; border-bottom: 1px dotted green}
 	.loginHeader span{margin:0 auto; line-height: 50px; font-size: 20px; font-weight: bold;}
 	
 	.loginContent { width:300px; height:180px; border-bottom:1px dotted powderblue; text-align: center;}

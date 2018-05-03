@@ -31,7 +31,27 @@ public class BDao {
 	public static BDao getInstance() {
 		return holder.instance;
 	}
-
+	/********************************************************************************************************************
+	 * GETTOTALLIST
+	********************************************************************************************************************/
+	public int getTotalList() {
+		int totalList = 0;
+		
+		String sql = "select count(*) as totalList from board";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				totalList = rs.getInt("totalList");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			streamCloser();
+		}
+		return totalList;
+	}
 	/********************************************************************************************************************
 	 * WRITE
 	********************************************************************************************************************/
@@ -61,15 +81,23 @@ public class BDao {
 	}
 	
 	/********************************************************************************************************************
-	 * BListCommand
+	 * BListCommand(*****)
 	********************************************************************************************************************/
-	public ArrayList<BDto> BListCommand(){
+	public ArrayList<BDto> BListCommand(int curPage){
 		ArrayList<BDto> dtos = new ArrayList<>();
-		String sql = "select * from board order by num desc";
+		String sql = "select a.rnum, a.id, a.name, a.num, a.title, a.rdate, a.hit\r\n" + 
+				"from(   select rownum as rnum, b.id, b.name, b.num, b.title, b.rdate, b.hit\r\n" + 
+				"        from(   select id, name, num, title, rdate, hit\r\n" + 
+				"                from board\r\n" + 
+				"                order by num desc)b\r\n" + 
+				"        where rownum <=?)a\r\n" + 
+				"where a.rnum>=?";
 		
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, curPage*10);
+			pstmt.setInt(2, curPage*10-9);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				int num = rs.getInt("num");

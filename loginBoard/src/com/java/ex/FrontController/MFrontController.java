@@ -1,6 +1,7 @@
 package com.java.ex.FrontController;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -9,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.java.ex.MCommand.MCommand;
 import com.java.ex.MCommand.MIdCheck;
@@ -17,6 +19,7 @@ import com.java.ex.MCommand.MLeave;
 import com.java.ex.MCommand.MLoginCheckCommand;
 import com.java.ex.MCommand.MLogoutCommand;
 import com.java.ex.MCommand.MModify;
+import com.sun.jmx.snmp.Enumerated;
 
 /**
  * Servlet implementation class MFrontController
@@ -77,7 +80,12 @@ public class MFrontController extends HttpServlet {
 			command.execute(request, response);
 			viewPage="leaveResult.jsp";
 		}
-	
+//		HttpSession session = request.getSession();
+//		Enumeration<String> se = session.getAttributeNames();
+//		while(se.hasMoreElements()) {
+//			String getse = se.nextElement()+"";
+//			System.out.println("Msession : " + getse + ":" + session.getAttribute(getse));
+//		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
 	}

@@ -11,10 +11,14 @@
 <title>Insert title here</title>
 
 <style>
+	html,body,h1,h2,h3,h4,h5,h6,p,ul,ol,dl,p,dd{margin: 0; padding: 0;}
 	tr:hover {background-color: #f5f5f5;}
 	a{text-decoration:none; color:#ddd}
 	a:hover{color:black}
 	table { width:50%; margin: 0 auto; text-align:left;}
+	table tfoot .navi { text-align: center;}
+	table tfoot .navi ul { list-style: none;}
+	table tfoot .navi ul li{ display: inline-block; padding-right: 10px;}
 	input { margin-right:10px;}
 	th{
 		background-color:#00e68a;
@@ -26,12 +30,11 @@
 		padding:8px;	
 		border-bottom: 1px solid lightgray;
 	}
-	
-
+	.curpage {text-decoration: underline; color:black; }
 </style>
 </head>
 <body>
-User : ${nameSession }<br/><hr>
+User : ${nameSession }  curPage : ${pdto.getCurPage() }<br/><hr>
 <%-- 	<select name="contentNum" onchange="list.do?contentNum=${contentNum }"> --%>
 <!-- 		<option value="10">10</option> -->
 <!-- 		<option value="20">20</option> -->
@@ -59,6 +62,34 @@ User : ${nameSession }<br/><hr>
 			</c:forEach>
 		</tbody>
 		<tfoot>
+			<tr>
+				<td colspan="5" class="navi">
+					<ul>
+						<c:if test="${pdto.getStartPage()>1}">
+							<li><a href="list.bdo?curPage=1">처음</a></li>
+						</c:if>
+						<c:if test="${pdto.getCurPage()>1 }">
+							<li><a href="list.bdo?curPage=${pdto.getCurPage()-1 }">이전</a></li>
+						</c:if>
+						<c:forEach var="idx" begin="${pdto.getStartPage() }" end="${pdto.getLastPage() }">
+							<c:choose>
+								<c:when test="${idx == pdto.getCurPage() }">
+									<li><a href="list.bdo?curPage=${idx }" class="curpage">${idx }</a></li>
+								</c:when>
+								<c:otherwise>
+									<li><a href="list.bdo?curPage=${idx }">${idx }</a></li>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+						<c:if test="${pdto.getCurPage() < pdto.getTotalPage() }">
+							<li><a href="list.bdo?curPage=${pdto.getCurPage()+1 }">다음</a></li>
+						</c:if>
+						<c:if test="${pdto.getLastPage()< pdto.getTotalPage() }">
+							<li><a href="list.bdo?curPage=${pdto.getTotalPage() }">마지막</a></li>
+						</c:if>
+					</ul>
+				</td>
+			</tr>
 			<tr>
 				<td colspan="5">
 					<input type="button" value="작성" onclick="javascript:window.location='write.jsp'">

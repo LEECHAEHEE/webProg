@@ -14,7 +14,6 @@ public class BContentCommand implements BCommand{
 		String num = request.getParameter("num");
 		BDao bDao = BDao.getInstance();
 		BDto bDto =	bDao.content(num);
-		
 		if(bDto!=null) {
 			request.setAttribute("bDto", bDto);
 		}

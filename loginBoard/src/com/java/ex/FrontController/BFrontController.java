@@ -1,6 +1,7 @@
 package com.java.ex.FrontController;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.java.ex.BCommand.BCommand;
 import com.java.ex.BCommand.BContentCommand;
@@ -67,6 +69,12 @@ public class BFrontController extends HttpServlet {
 			viewPage="deleteResult.jsp";
 		}
 		
+//		HttpSession session = request.getSession();
+//		Enumeration<String> se = session.getAttributeNames();
+//		while(se.hasMoreElements()) {
+//			String getse = se.nextElement()+"";
+//			System.out.println("Bsession : " + getse + ":" + session.getAttribute(getse));
+//		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
 	}

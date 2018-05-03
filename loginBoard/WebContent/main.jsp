@@ -8,7 +8,7 @@
 </head>
 <body>
 	HI! ${ nameSession}<br/><hr>
-	<input type="button" value="게시판" onclick="javascript:window.location='list.bdo'">
+	<input type="button" value="게시판" onclick="javascript:window.location='list.bdo?curPage=1'">
 	<input type="button" value="회원정보 수정" onclick="javascript:window.location='modify.jsp'">
 	<input type="button" value="로그아웃" onclick="javascript:window.location='logout.mdo'">
 	<input type="button" value="회원탈퇴" onclick="javascript:window.location='leave.mdo'">
