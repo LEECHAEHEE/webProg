@@ -18,7 +18,7 @@
 		비밀번호<input type="password" name="pw"><br/>
 		이메일	<input type="text" name="email"><br/>
 		주소	<input type="text" name="address"><br/>
-		<input type="submit" value="수정완료">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="뒤로" onclick="javascript:window.location='login.mdo'">
+		<input type="submit" value="수정완료">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="뒤로" onclick="javascript:window.history.back()">
 	</form>
 </body>
 </html>

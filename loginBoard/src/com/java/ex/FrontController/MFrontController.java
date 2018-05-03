@@ -3,6 +3,7 @@ package com.java.ex.FrontController;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,7 +29,12 @@ public class MFrontController extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-
+    
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+    	super.init(config);
+    }
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doAction(request,response);
 	}
@@ -41,7 +47,6 @@ public class MFrontController extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		
 		MCommand command = null;
-		
 		String viewPage = null;
 		
 		String uri = request.getRequestURI();

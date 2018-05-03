@@ -12,7 +12,7 @@
 		<c:when test="${modifyResult==1 }">
 			<script>
 				alert("수정완료");
-				location.href="main.jsp";
+				location.href="list.bdo";
 			</script>
 		</c:when>
 		<c:otherwise>

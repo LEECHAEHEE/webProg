@@ -37,14 +37,15 @@ public class BDao {
 	********************************************************************************************************************/
 	public int write(String id, String name, String title, String content) {
 		int writeResult = DB_ERROR;
-		String sql = "insert into board (num,name,title,content,hit) values(board_seq.nextval, ?,?,?,?)";
+		String sql = "insert into board (num,id,name,title,content,hit) values(board_seq.nextval, ?,?,?,?,?)";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, name);
-			pstmt.setString(2, title);
-			pstmt.setString(3, content);
-			pstmt.setInt(4, 0);
+			pstmt.setString(1, id);
+			pstmt.setString(2, name);
+			pstmt.setString(3, title);
+			pstmt.setString(4, content);
+			pstmt.setInt(5, 0);
 			
 			writeResult = pstmt.executeUpdate();
 			if(writeResult==1) {
@@ -98,12 +99,13 @@ public class BDao {
 			pstmt.setString(1, num);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
+				String id = rs.getString("id");
 				String name = rs.getString("name");
 				String title = rs.getString("title");
 				String content = rs.getString("content");
 				String rDate = new SimpleDateFormat("MM/dd hh:mm:ss").format(rs.getTimestamp("rDate"));
 				int hit= rs.getInt("hit");
-				bDto = new BDto(Integer.parseInt(num), name, title, content, rDate, hit);
+				bDto = new BDto(Integer.parseInt(num), id, name, title, content, rDate, hit);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -111,6 +113,46 @@ public class BDao {
 			streamCloser();
 		}
 		return bDto;
+	}
+	/********************************************************************************************************************
+	 * MODIFY
+	********************************************************************************************************************/
+	public int modify(String num, String title, String content) {
+		int modifyResult = DB_ERROR;
+		String sql = "update board set title=?, content=? where num=?";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			pstmt.setString(3, num);
+			modifyResult = pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			streamCloser();
+		}
+		return modifyResult;
+	}
+	/********************************************************************************************************************
+	 * MODIFY
+	********************************************************************************************************************/
+	public int delete(String num) {
+		int deleteResult = DB_ERROR;
+		String sql = "delete from board where num=?";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, num);
+			deleteResult = pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			streamCloser();
+		}
+		return deleteResult;
 	}
 	/********************************************************************************************************************
 	 * SREAMCLOSER

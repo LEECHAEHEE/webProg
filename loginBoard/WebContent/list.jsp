@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
@@ -15,7 +15,7 @@
 	a{text-decoration:none; color:#ddd}
 	a:hover{color:black}
 	table { width:50%; margin: 0 auto; text-align:left;}
-	
+	input { margin-right:10px;}
 	th{
 		background-color:#00e68a;
 		color:white;
@@ -40,11 +40,11 @@ User : ${nameSession }<br/><hr>
 	<table>
 		<thead>
 			<tr>
-				<th style="width:50px;">±Û¹øÈ£</th>
-				<th style="width:80px;">ÀÛ¼ºÀÚ</th>
-				<th style="width:200px;">Á¦¸ñ</th>
-				<th style="width:150px;">ÀÛ¼ºÀÏ</th>
-				<th style="width:50px;">Á¶È¸¼ö</th>
+				<th style="width:70px;">ê¸€ë²ˆí˜¸</th>
+				<th style="width:80px;">ì‘ì„±ì</th>
+				<th style="width:200px;">ì œëª©</th>
+				<th style="width:150px;">ì‘ì„±ì¼</th>
+				<th style="width:50px;">ì¡°íšŒìˆ˜</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -61,7 +61,8 @@ User : ${nameSession }<br/><hr>
 		<tfoot>
 			<tr>
 				<td colspan="5">
-					<input type="button" value="ÀÛ¼º" onclick="javascript:window.location='write.jsp'">
+					<input type="button" value="ì‘ì„±" onclick="javascript:window.location='write.jsp'">
+					<input type="button" value="ë©”ì¸" onclick="javascript:window.location='main.jsp'">
 				</td>
 			</tr>
 		</tfoot>

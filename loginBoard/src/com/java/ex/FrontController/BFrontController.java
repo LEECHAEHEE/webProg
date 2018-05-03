@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.java.ex.BCommand.BCommand;
 import com.java.ex.BCommand.BContentCommand;
+import com.java.ex.BCommand.BDeleteCommand;
 import com.java.ex.BCommand.BListCommand;
+import com.java.ex.BCommand.BModifyCommand;
 import com.java.ex.BCommand.BWriteCommand;
 
 @WebServlet("*.bdo")
@@ -51,6 +53,18 @@ public class BFrontController extends HttpServlet {
 			command = new BContentCommand();
 			command.execute(request, response);
 			viewPage="content.jsp";
+		}else if(com.equals("/modifyView.bdo")) {
+			command = new BContentCommand();
+			command.execute(request, response);
+			viewPage="modifyView.jsp";
+		}else if(com.equals("/modify.bdo")) {
+			command = new BModifyCommand();
+			command.execute(request, response);
+			viewPage="modifyResult.jsp";
+		}else if(com.equals("/delete.bdo")) {
+			command = new BDeleteCommand();
+			command.execute(request, response);
+			viewPage="deleteResult.jsp";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

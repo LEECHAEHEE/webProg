@@ -2,6 +2,7 @@ package com.java.ex.Dto;
 
 
 public class BDto {
+	private String id;
 	private int num;
 	private String name;
 	private String title;
@@ -22,9 +23,10 @@ public class BDto {
 		this.hit = hit;
 	}
 	
-	public BDto(int num, String name, String title, String content, String rDate, int hit) {
+	public BDto(int num, String id, String name, String title, String content, String rDate, int hit) {
 		super();
 		this.num = num;
+		this.id = id;
 		this.name = name;
 		this.title = title;
 		this.content = content;
@@ -78,6 +80,14 @@ public class BDto {
 
 	public void setHit(int hit) {
 		this.hit = hit;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 	

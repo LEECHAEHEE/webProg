@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -21,16 +21,17 @@
 User : ${nameSession }<br/><hr>
 <form action="write.bdo" method="post">
 	<input type="hidden" name="name" value="${nameSession }">
+	<input type="hidden" name="id" value="${idSession }">
 	
 	<div class="contentWrap">
 		<div class="titleWrap">
-			<input type="text" name="title" placeholder="Á¦¸ñÀ» ÀÔ·ÂÇÏ¼¼¿ä"><br/>
+			<input type="text" name="title" placeholder="ì œëª©ì„ ìž…ë ¥í•˜ì„¸ìš”"><br/>
 		</div>
 		<div class="contentInput">
-			<textarea name="content" rows="24" cols="10" placeholder="³»¿ëÀ» ÀÔ·ÂÇÏ¼¼¿ä"></textarea>
+			<textarea name="content" rows="24" cols="10" placeholder="ë‚´ìš©ì„ ìž…ë ¥í•˜ì„¸ìš”"></textarea>
 		</div>
 		<div class="submitWrap">
-			<input class="submitButton" type="submit" value="È®ÀÎ"> <input type="button" class="submitButton" value="Ãë¼Ò" onclick="list.bdo"> 
+			<input class="submitButton" type="submit" value="í™•ì¸"> <input type="button" class="submitButton" value="ì·¨ì†Œ" onclick="list.bdo"> 
 		</div>
 	</div>
 </form>
