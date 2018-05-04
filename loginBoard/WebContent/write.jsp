@@ -18,7 +18,7 @@
 </style>
 </head>
 <body>
-User : ${nameSession }<br/><hr>
+User : ${nameSession } curPage : ${curPage}<br/><hr>
 <form action="write.bdo" method="post">
 	<input type="hidden" name="name" value="${nameSession }">
 	<input type="hidden" name="id" value="${idSession }">
@@ -31,7 +31,7 @@ User : ${nameSession }<br/><hr>
 			<textarea name="content" rows="24" cols="10" placeholder="내용을 입력하세요"></textarea>
 		</div>
 		<div class="submitWrap">
-			<input class="submitButton" type="submit" value="확인"> <input type="button" class="submitButton" value="취소" onclick="list.bdo"> 
+			<input class="submitButton" type="submit" value="확인"> <input type="button" class="submitButton" value="취소" onclick="javascript:window.location='list.bdo'"> 
 		</div>
 	</div>
 </form>

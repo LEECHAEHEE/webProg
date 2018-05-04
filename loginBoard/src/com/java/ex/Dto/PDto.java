@@ -8,7 +8,8 @@ public class PDto {
 	private int totalPage;			//총 페이지 개수 
 	private int startPage = 1;		//시작 페이지 (처음 페이지는 1)
 	private int lastPage;			//마지막 페이지
-
+	private boolean prev=false;
+	private boolean next=true;
 	/********************************************************************************************************************
 	 * SET totalList
 	********************************************************************************************************************/
@@ -19,10 +20,15 @@ public class PDto {
 	public PDto(int curPage,int totalList) {
 		this.totalList = totalList;
 		this.curPage = curPage;
-		if(this.curPage>this.totalList) this.curPage = this.getTotalList(); 
 		this.totalPage = getTotalPage();
 		this.startPage = getStartPage();
 		this.lastPage = getLastPage();
+		
+		if(curPage > 10) setPrev(true);
+		else setPrev(false);
+		
+		if(curPage < (totalPage-1)/getPagePerView()*getPagePerView()+1) setNext(true);
+		else setNext(false);
 	}
 	
 	public PDto(int listPerPage, int pagePerView, int curPage, int totalList, int totalPage, int startPage,
@@ -96,5 +102,21 @@ public class PDto {
 	public void setLastPage(int lastPage) {
 		this.lastPage = lastPage;
 		
+	}
+
+	public boolean isPrev() {
+		return prev;
+	}
+
+	public void setPrev(boolean prev) {
+		this.prev = prev;
+	}
+
+	public boolean isNext() {
+		return next;
+	}
+
+	public void setNext(boolean next) {
+		this.next = next;
 	}
 }

@@ -24,7 +24,7 @@
 </style>
 </head>
 <body>
-USER : ${idSession  } / ${bDto.id }<br/><hr>
+USER : ${idSession  } / ${bDto.id } CURPAGE:${curPage }<br/><hr>
 <div class="contentWrap">
 	<div class="titleBar">
 		<p class="title">${bDto.title }</p>

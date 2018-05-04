@@ -35,6 +35,7 @@ public class BFrontController extends HttpServlet {
 
 	protected void doAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		
 		String viewPage = null;
 		BCommand command = null;

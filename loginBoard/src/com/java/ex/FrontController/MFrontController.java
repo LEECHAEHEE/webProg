@@ -47,6 +47,7 @@ public class MFrontController extends HttpServlet {
 	}
 
 	protected void doAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		
 		MCommand command = null;

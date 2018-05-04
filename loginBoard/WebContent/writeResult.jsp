@@ -12,7 +12,7 @@
 		<c:when test="${writeResult==1 }">
 			<script type="text/javascript">
 				alert("등록되었습니다");
-				location.href="list.bdo";
+				location.href="list.bdo?curPage=1";
 			</script>
 		</c:when>
 		<c:otherwise>

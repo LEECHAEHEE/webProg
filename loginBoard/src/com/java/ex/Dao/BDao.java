@@ -11,7 +11,6 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import com.java.ex.Dto.BDto;
-import com.sun.org.apache.xml.internal.dtm.DTMDOMException;
 
 
 public class BDao {
@@ -121,6 +120,7 @@ public class BDao {
 	public BDto content(String num) {
 		BDto bDto = null;
 		String sql = "select * from board where num=?";
+		String sql2 = "update board set hit=hit+1 where num=?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -134,7 +134,11 @@ public class BDao {
 				String rDate = new SimpleDateFormat("MM/dd hh:mm:ss").format(rs.getTimestamp("rDate"));
 				int hit= rs.getInt("hit");
 				bDto = new BDto(Integer.parseInt(num), id, name, title, content, rDate, hit);
+				if(pstmt!=null) pstmt.close();
 			}
+			pstmt = conn.prepareStatement(sql2);
+			pstmt.setString(1, num);
+			pstmt.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -187,6 +191,7 @@ public class BDao {
 	********************************************************************************************************************/
 	public void streamCloser() {
 		try {
+			if(conn!=null) conn.close();
 			if(pstmt!=null) pstmt.close();
 			if(rs!=null) rs.close();
 		}catch(Exception e) {

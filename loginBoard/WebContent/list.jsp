@@ -34,7 +34,7 @@
 </style>
 </head>
 <body>
-User : ${nameSession }  curPage : ${pdto.getCurPage() }<br/><hr>
+User : ${nameSession } <br/><hr>
 <%-- 	<select name="contentNum" onchange="list.do?contentNum=${contentNum }"> --%>
 <!-- 		<option value="10">10</option> -->
 <!-- 		<option value="20">20</option> -->
@@ -55,7 +55,7 @@ User : ${nameSession }  curPage : ${pdto.getCurPage() }<br/><hr>
 				<tr>
 					<td>${iter.num }</td>
 					<td>${iter.name }</td>
-					<td><a href="content.bdo?num=${iter.num }">${iter.title }</a></td>
+					<td><a href="content.bdo?num=${iter.num }&curPage=${pdto.curPage}">${iter.title }</a></td>
 					<td>${iter.rDate }</td>
 					<td>${iter.hit }</td>
 				</tr>
@@ -65,11 +65,11 @@ User : ${nameSession }  curPage : ${pdto.getCurPage() }<br/><hr>
 			<tr>
 				<td colspan="5" class="navi">
 					<ul>
-						<c:if test="${pdto.getStartPage()>1}">
+						<c:if test="${pdto.isPrev()}">
 							<li><a href="list.bdo?curPage=1">처음</a></li>
 						</c:if>
-						<c:if test="${pdto.getCurPage()>1 }">
-							<li><a href="list.bdo?curPage=${pdto.getCurPage()-1 }">이전</a></li>
+						<c:if test="${pdto.isPrev() }">
+							<li><a href="list.bdo?curPage=${pdto.getStartPage()-1}">이전</a></li>
 						</c:if>
 						<c:forEach var="idx" begin="${pdto.getStartPage() }" end="${pdto.getLastPage() }">
 							<c:choose>
@@ -81,10 +81,10 @@ User : ${nameSession }  curPage : ${pdto.getCurPage() }<br/><hr>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
-						<c:if test="${pdto.getCurPage() < pdto.getTotalPage() }">
-							<li><a href="list.bdo?curPage=${pdto.getCurPage()+1 }">다음</a></li>
+						<c:if test="${pdto.isNext()}">
+							<li><a href="list.bdo?curPage=${pdto.getLastPage()+1 }">다음</a></li>
 						</c:if>
-						<c:if test="${pdto.getLastPage()< pdto.getTotalPage() }">
+						<c:if test="${pdto.isNext()}">
 							<li><a href="list.bdo?curPage=${pdto.getTotalPage() }">마지막</a></li>
 						</c:if>
 					</ul>

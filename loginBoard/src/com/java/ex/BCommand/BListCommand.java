@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.java.ex.Dao.BDao;
 import com.java.ex.Dto.BDto;
@@ -14,23 +15,25 @@ public class BListCommand implements BCommand{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		BDao dao = BDao.getInstance();
-		int curPage = Integer.parseInt(request.getParameter("curPage"));
+		HttpSession session = request.getSession();
+		int curPage=0;
+		String tmpCurPage = request.getParameter("curPage");
+		
+		if(tmpCurPage==null) {
+			curPage = (int)session.getAttribute("curPage");
+		}else {
+			curPage = Integer.parseInt(tmpCurPage);
+			session.setAttribute("curPage", curPage);
+		}
+
+		
 		int totalList = dao.getTotalList();
-		System.out.println("curPage : " + curPage);
 		
 		PDto pdto = new PDto(curPage, totalList);
 	
-		System.out.println("getCurPage() : " + pdto.getCurPage());
-		System.out.println("getStartPage() : " + pdto.getStartPage());
-		System.out.println("getLastPage() : " + pdto.getLastPage());
-		System.out.println("getTotalList() : " + pdto.getTotalList());
-		System.out.println("getTotalPage() : " + pdto.getTotalPage());
-		
 		ArrayList<BDto> dtos = dao.BListCommand(curPage);
 		
-		//System.out.println("BListCommand 17 :" + dtos.get(0).getName() + " " + dtos.get(0).getrDate());
 		request.setAttribute("dtos", dtos);
 		request.setAttribute("pdto", pdto);
 	}
-
 }
